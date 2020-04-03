@@ -1,5 +1,5 @@
-import {ItemList} from "./item";
-import {escapeForHTML} from './helpers';
+import {ItemList} from "./item.mjs";
+import {escapeForHTML} from './helpers.mjs';
 
 export default class Template {
 
