@@ -5,6 +5,32 @@
     <title>Title</title>
 </head>
 <body>
+<section>
+    <header>
+        <h1>todos</h1>
+        <input placeholder="What needs to be done?" autofocus>
+    </header>
+    <section style="display: none">
+        <input type="checkbox">
+        <label>Mark all as complete</label>
+        <ul></ul>
+        <footer>
+            <span></span>
+            <ul>
+                <li><a href="#/">All</a></li>
+                <li><a href="#/active">Active</a></li>
+                <li><a href="#/completed">Completed</a></li>
+            </ul>
+            <button>Clear completed</button>
+        </footer>
+    </section>
+</section>
+<footer>
+    <p>Double-click to edit a todo</p>
+    <p>Written by <a href="http://twitter.com/lukeed05">Luke Edwards</a></p>
+    <p>Refactored by <a href="https://github.com/xorgy">Aaron Muir Hamilton</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
 <script type="module" src="src/controller.mjs"></script>
 <script type="module" src="src/view.mjs"></script>
 <script type="module" src="src/template.mjs"></script>

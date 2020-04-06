@@ -1,4 +1,15 @@
 
+
+export function qs(selector, scope) {
+    return (scope || document).querySelector(selector);
+}
+
+
+export function $on(target, type, callback, capture) {
+    target.addEventListener(type, callback, !!capture);
+    //capture 는 하위로 이벤트를 전달하는것 기본은 false
+}
+
 /*
 &amp, &lt와 같은 특수문자를 HTML Entity 엔티티라고 부른다.
 <div> < menu</div> menu 앞특수 문자를 표현하기 위한것
