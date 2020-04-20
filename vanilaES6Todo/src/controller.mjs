@@ -5,6 +5,8 @@ export default class Controller {
         this.store = store;
         this.view = view;
 
+        view.bindAddItem(this.addItem.bind(this));
+
         this._activeRoute = '';
         this._lastActiveRoute = null;
     }
