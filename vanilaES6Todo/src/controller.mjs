@@ -5,6 +5,9 @@ export default class Controller {
         this.store = store;
         this.view = view;
 
+        /* bind: 새로운 바인딩 함수를 만듬
+        *  해당 함수를 "나중에" 이벤트에서 유용한 특정 컨텍스트로 호출 할 대 사용된다.
+        * */
         view.bindAddItem(this.addItem.bind(this));
 
         this._activeRoute = '';
@@ -18,6 +21,17 @@ export default class Controller {
         this._activeRoute = route;
         this._filter();
         this.view.updateFilterButtons(route);
+    }
+
+    addItem(title) {
+        this.store.insert({
+            id: Date.now(),
+            title,
+            completed:false
+        },() => {
+            this.view.clearNewTodo();
+            this._filter(true);
+        });
     }
 
 
