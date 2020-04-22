@@ -1,4 +1,4 @@
-import {emptyItemQuery} from "./item";
+import {emptyItemQuery} from "./item.mjs";
 
 export default class Controller {
     constructor(store, view) {

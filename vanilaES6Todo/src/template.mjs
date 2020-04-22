@@ -14,6 +14,9 @@ export default class Template {
 </li>`,'');
     }
 
+    itemCounter(activeTodos) {
+        return `${activeTodos} item${activeTodos !== 1? 's':''} left`
+    }
 }
 
 /*

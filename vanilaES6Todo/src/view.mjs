@@ -1,12 +1,13 @@
+import {ItemList} from "./item.mjs";
+import {qs,$on, $delegate} from './helpers.mjs';
+import Template from "./template.mjs";
 
-import {qs,$on} from './helpers.mjs';
-import {$delegate} from "./helpers";
 
 export default class View {
     constructor(template) {
         this.template = template;
         this.$todoList = qs('.todo-list');
-        this.$todoItemCounter = qs('todo-count');
+        this.$todoItemCounter = qs('.todo-count');
         this.$clearCompleted = qs('.clear-completed');
         this.$main = qs('.main');
         this.$toggleAll = qs('.toggle-all');
@@ -20,10 +21,31 @@ export default class View {
     showItems(items) {
         this.$todoList.innerHTML = this.template.itemList(items);
     }
+
+    setItemsLeft(itemsLeft) {
+        this.$todoItemCounter.innerHTML = this.template.itemCounter(itemsLeft);
+    }
+
+    setClearCompletedButtonVisibility(visible) {
+        this.$clearCompleted.style.display = !!visible ? 'block' :'none';
+    }
+
+    setMainVisibility(visible) {
+        this.$main.style.display = !!visible ? 'block': 'none';
+    }
+
+    setCompleteAllCheckbox(checked) {
+        this.$toggleAll.checked = !!checked;
+    }
+
     //현재 라우트 상태를 보고 필터링 버튼을 변경한다.
     updateFilterButtons(route) {
         qs('.filters .selected').className = '';
         qs(`.filters [href="#/${route}"]`).className = 'selected';
+    }
+
+    clearNewTodo() {
+        this.$newTodo.value = '';
     }
 
     bindAddItem(handler) {

@@ -20,4 +20,42 @@ export default class Store {
         }
     }
 
+    find(query, callback) {
+        const todos = this.getLocalStorage();
+        let k;
+        callback(todos.filter(todo => {
+            for (k in query) {
+                if (query[k] !== todo[k]) {
+                    return false;
+                }
+                return true;
+            }
+        }));
+    }
+
+    insert(item, callback) {
+        const todos = this.getLocalStorage();
+        todos.push(item);
+        this.setLocalStorage(todos);
+        if(callback) {
+            callback();
+        }
+    }
+
+    count(callback) {
+        this.find(emptyItemQuery, data => {
+           const total = data.length;
+           let i = total;
+           let completed = 0;
+
+           while (i--) {
+               completed += data[i].completed;
+           }
+
+           callback(total, total - completed, completed)
+
+        });
+    }
+
+
 }
