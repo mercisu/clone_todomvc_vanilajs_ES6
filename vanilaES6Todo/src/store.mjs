@@ -24,12 +24,13 @@ export default class Store {
         const todos = this.getLocalStorage();
         let k;
         callback(todos.filter(todo => {
-            for (k in query) {
-                if (query[k] !== todo[k]) {
+            for(k in query) {
+                if(query[k] !== todo[k]) {
                     return false;
                 }
-                return true;
             }
+            return true;
+
         }));
     }
 

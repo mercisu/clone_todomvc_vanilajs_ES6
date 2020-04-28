@@ -52,8 +52,10 @@ export default class View {
 
         //destructuring-objects-as-function-parameters-in-es6
         // ({target}) 파라미터가 object로 전달 될때 target이라는 이름의 프로퍼티가 있어야함을 의미
+
+        //change event triggers when the element has finished changing.
         $on(this.$newTodo, 'change', ({target}) => {
-            console.log(target)
+            console.log(target,"change((")
             const title = target.value.trim();
             if(title) {
                 handler(title);

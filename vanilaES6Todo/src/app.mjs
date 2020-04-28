@@ -10,7 +10,6 @@ const template = new Template();
 const view = new View(template);
 
 const controller = new Controller(store, view);
-console.log(controller,"controller");
 const setView = () => controller.setView(document.location.hash);
 //화살표 함수로 간략 하게 함수 선언 할 수 있다.
 
