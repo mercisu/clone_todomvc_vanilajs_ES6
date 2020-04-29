@@ -43,6 +43,24 @@ export default class Store {
         }
     }
 
+    remove(query, callback) {
+        let k;
+        const todos = this.getLocalStorage().filter(todo => {
+            for (k in query) {
+                if (query[k] !== todo[k]) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        this.setLocalStorage(todos);
+
+        if(callback) {
+            callback(todos);
+        }
+    }
+
     count(callback) {
         this.find(emptyItemQuery, data => {
            const total = data.length;

@@ -2,6 +2,7 @@ import {ItemList} from "./item.mjs";
 import {qs,$on, $delegate} from './helpers.mjs';
 import Template from "./template.mjs";
 
+const _itemId = element => parseInt(element.parentNode.dataset.id || element.parentNode.parentNode.dataset.id, 10);
 
 export default class View {
     constructor(template) {
@@ -20,6 +21,13 @@ export default class View {
 
     showItems(items) {
         this.$todoList.innerHTML = this.template.itemList(items);
+    }
+
+    removeItem(id) {
+        const elem = qs(`[data-id="${id}"]`);
+        if(elem) {
+            this.$todoList.removeChild(elem);
+        }
     }
 
     setItemsLeft(itemsLeft) {
@@ -61,5 +69,16 @@ export default class View {
                 handler(title);
             }
         })
+    }
+
+    bindRemoveCompleted(handler) {
+        $on(this.$clearCompleted, 'click', handler);
+    }
+
+    bindRemoveItem(handler) {
+        $delegate(this.$todoList, '.destroy', 'click', ({target}) => {
+            console.log("click",target)
+           handler(_itemId(target));
+        });
     }
 }

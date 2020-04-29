@@ -9,7 +9,7 @@ export default class Template {
     <div class="view">
         <input class="toggle" type="checkbox" ${item.completed? 'checked' : ''}>
         <label>${escapeForHTML(item.title)}</label>
-        <button class="destory"></button>
+        <button class="destroy"></button>
     </div>
 </li>`,'');
     }

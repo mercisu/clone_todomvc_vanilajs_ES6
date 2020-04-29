@@ -9,6 +9,8 @@ export default class Controller {
         *  해당 함수를 "나중에" 이벤트에서 유용한 특정 컨텍스트로 호출 할 대 사용된다.
         * */
         view.bindAddItem(this.addItem.bind(this));
+        view.bindRemoveItem(this.removeItem.bind(this));
+        view.bindRemoveCompleted(this.removeCompletedItems.bind(this));
 
         this._activeRoute = '';
         this._lastActiveRoute = null;
@@ -32,6 +34,17 @@ export default class Controller {
             this.view.clearNewTodo();
             this._filter(true);
         });
+    }
+
+    removeItem(id) {
+        this.store.remove({id}, () => {
+            this._filter();
+            this.view.removeItem(id);
+        });
+    }
+
+    removeCompletedItems() {
+        this.store.remove({completed:true},this._filter.bind(this));
     }
 
 
