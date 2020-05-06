@@ -11,6 +11,8 @@ export default class Controller {
         view.bindAddItem(this.addItem.bind(this));
         view.bindRemoveItem(this.removeItem.bind(this));
         view.bindRemoveCompleted(this.removeCompletedItems.bind(this));
+        view.bindEditItemSave(this.editItemSave.bind(this));
+        view.bindEditItemCancel(this.editItemCancel.bind(this));
 
         this._activeRoute = '';
         this._lastActiveRoute = null;
@@ -34,6 +36,23 @@ export default class Controller {
             this.view.clearNewTodo();
             this._filter(true);
         });
+    }
+
+    editItemSave(id, title) {
+        if(title.length) {
+            this.store.update({id,title}, () => {
+               this.view.editItemDone(id,title);
+            });
+        } else{
+            this.removeItem(id);
+        }
+    }
+
+    editItemCancel(id) {
+        this.store.find({id}, data => {
+            const title = data[0].title;
+            this.view.editItemDone(id, title);
+        })
     }
 
     removeItem(id) {

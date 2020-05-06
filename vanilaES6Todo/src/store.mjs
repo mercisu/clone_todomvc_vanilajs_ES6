@@ -34,6 +34,27 @@ export default class Store {
         }));
     }
 
+    update(update, callback) {
+        const id = update.id;
+        const todos = this.getLocalStorage();
+        let i = todos.length;
+        let k;
+
+        while (i--) {
+            if(todos[i].id === id) {
+                for(k in update) {
+                    todos[i][k] = update[k];
+                }
+                break;
+            }
+        }
+
+        this.setLocalStorage(todos);
+        if(callback) {
+            callback();
+        }
+    }
+
     insert(item, callback) {
         const todos = this.getLocalStorage();
         todos.push(item);
@@ -75,6 +96,5 @@ export default class Store {
 
         });
     }
-
 
 }
