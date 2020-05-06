@@ -13,6 +13,11 @@ export default class Controller {
         view.bindRemoveCompleted(this.removeCompletedItems.bind(this));
         view.bindEditItemSave(this.editItemSave.bind(this));
         view.bindEditItemCancel(this.editItemCancel.bind(this));
+        view.bindToggleItem((id,completed) => {
+            this.toggleCompleted(id, completed);
+            this._filter();
+        });
+        view.bindToggleAll(this.toggleAll.bind(this));
 
         this._activeRoute = '';
         this._lastActiveRoute = null;
@@ -64,6 +69,22 @@ export default class Controller {
 
     removeCompletedItems() {
         this.store.remove({completed:true},this._filter.bind(this));
+    }
+
+    toggleCompleted(id, completed) {
+        this.store.update({id,completed},()=> {
+           this.view.setItemComplete(id,completed);
+        });
+    }
+
+    toggleAll(completed) {
+        this.store.find({completed:!completed}, data => {
+            for (let {id} of data) {
+                this.toggleCompleted(id,completed);
+            }
+        });
+
+        this._filter();
     }
 
 

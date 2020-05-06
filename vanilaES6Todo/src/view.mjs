@@ -42,31 +42,6 @@ export default class View {
         qs('label', listItem).textContent = title;
     }
 
-    bindEditItemSave(handler) {
-        $delegate(this.$todoList,'li .edit', 'blur',({target}) => {
-            if(!target.dataset.iscanceled) {
-                handler(_itemId(target), target.value.trim());
-            }
-        },true);
-
-        $delegate(this.$todoList, 'li .edit', 'keypress', ({target, keyCode}) =>{
-            if (keyCode === ENTER_KEY) {
-                target.blur();
-            }
-        })
-    }
-
-    bindEditItemCancel(handler) {
-        $delegate(this.$todoList, 'li .edit', 'keyup', ({target, keyCode}) => {
-            if (keyCode === ESCAPE_KEY) {
-                target.dataset.iscanceled = true;
-                target.blur();
-
-                handler(_itemId(target));
-            }
-        })
-    }
-
     showItems(items) {
         this.$todoList.innerHTML = this.template.itemList(items);
     }
@@ -104,6 +79,16 @@ export default class View {
         this.$newTodo.value = '';
     }
 
+    setItemComplete(id, completed) {
+        const listItem = qs(`[data-id="${id}"`);
+
+        if(!listItem) {
+            return;
+        }
+        listItem.className = completed ? 'completed':'';
+        qs('input',listItem).checked = completed;
+    }
+
     bindAddItem(handler) {
 
         //destructuring-objects-as-function-parameters-in-es6
@@ -126,5 +111,42 @@ export default class View {
         $delegate(this.$todoList, '.destroy', 'click', ({target}) => {
            handler(_itemId(target));
         });
+    }
+
+    bindEditItemSave(handler) {
+        $delegate(this.$todoList,'li .edit', 'blur',({target}) => {
+            if(!target.dataset.iscanceled) {
+                handler(_itemId(target), target.value.trim());
+            }
+        },true);
+
+        $delegate(this.$todoList, 'li .edit', 'keypress', ({target, keyCode}) =>{
+            if (keyCode === ENTER_KEY) {
+                target.blur();
+            }
+        })
+    }
+
+    bindEditItemCancel(handler) {
+        $delegate(this.$todoList, 'li .edit', 'keyup', ({target, keyCode}) => {
+            if (keyCode === ESCAPE_KEY) {
+                target.dataset.iscanceled = true;
+                target.blur();
+
+                handler(_itemId(target));
+            }
+        })
+    }
+
+    bindToggleAll(handler) {
+        $on(this.$toggleAll,'click', ({target}) => {
+           handler(target.checked);
+        });
+    }
+
+    bindToggleItem(handler) {
+        $delegate(this.$todoList, '.toggle', 'click', ({target}) => {
+            handler(_itemId(target), target.checked);
+        })
     }
 }
